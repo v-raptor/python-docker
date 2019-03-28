@@ -26,4 +26,5 @@ sparkpost
 stripe
 timeout-decorator
 tldextract
-IPy
+ipy
+certstream
