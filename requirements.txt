@@ -4,6 +4,7 @@ boto3
 cachetools
 card-validator
 certifi
+certstream
 dogstatsd-python
 elasticsearch
 email_validator
@@ -11,6 +12,7 @@ flask
 flask-httpauth
 gunicorn
 inotify
+ipy
 jinja2
 jira
 mailchimp3
@@ -26,5 +28,3 @@ sparkpost
 stripe
 timeout-decorator
 tldextract
-ipy
-certstream
