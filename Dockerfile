@@ -13,5 +13,5 @@ RUN apk add --no-cache tzdata python3 py-cryptography py-lxml py-zmq build-base 
     && rm -r /root/.cache \
     && apk del build-base python3-dev libffi-dev libressl-dev
 
-ADD vraptor /usr/lib/python3.6/
+ADD ./vraptor/ /usr/lib/python3.6/
 CMD [ "python3", "app.py" ]
