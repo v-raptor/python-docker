@@ -54,12 +54,14 @@ def log_err(msg = ''):
 
 
 
-def es_exists(_index, _id):
+def es_exists(hosts, _index, _id):
+    es = Elasticsearch(hosts)
     return es.exists(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
 
 
 
-def es_index(_index, _id, _body):
+def es_index(hosts, _index, _id, _body):
+    es = Elasticsearch(hosts)
     return es.index(index = _index, doc_type = 'doc', id = host, body = _body, request_timeout = 30)
 
 
