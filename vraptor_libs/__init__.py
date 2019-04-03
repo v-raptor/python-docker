@@ -2,7 +2,7 @@ from cardvalidator import luhn
 from datetime import datetime
 from dns import resolver
 from elasticsearch import Elasticsearch
-from flask import Flask, jsonify, request, render_template, redirect, g
+from flask import Flask, jsonify, request, render_template, redirect, g, flash, url_for
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from pycpfcnpj import cpfcnpj
