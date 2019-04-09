@@ -2,10 +2,13 @@ from cardvalidator import luhn
 from datetime import datetime
 from dns import resolver
 from elasticsearch import Elasticsearch
+from email_validator import validate_email
 from flask import Flask, jsonify, request, render_template, redirect, g, flash, url_for
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
+from mailchimp3 import MailChimp
 from pycpfcnpj import cpfcnpj
+from sparkpost import SparkPost
 from threading import Thread
 
 
@@ -31,6 +34,7 @@ import schedule
 import socket
 import sqlite3
 import string
+import stripe
 import sys
 import time
 import timeout_decorator
