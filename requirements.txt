@@ -12,7 +12,6 @@ flask
 flask-httpauth
 gunicorn
 inotify
-ipy
 jinja2
 jira
 mailchimp3
