@@ -48,7 +48,7 @@ def digits_(string):
 
 def public_ip(ip_adress):
     try:
-        return IP(ip_adress).iptype() == 'PUBLIC'
+        return ipaddress.ip_address(ip_adress).is_global
     except:
         return False
 
