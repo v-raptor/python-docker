@@ -56,7 +56,7 @@ def public_ip(ip_adress):
 
 def asteriscos(password, percent = 60):
     limit = int(round(len(password) * percent / 100.))
-    return password[:limit] + '*' * (len(password) - limit)
+    return password[:limit] + '*' * len(password[limit:])
 
 
 
