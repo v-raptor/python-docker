@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from cardvalidator import luhn
 from datetime import datetime
 from dns import resolver
@@ -7,6 +8,7 @@ from flask import Flask, jsonify, request, render_template, redirect, g, flash, 
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
+from urllib.parse import urljoin, urlparse, urldefrag
 from pycpfcnpj import cpfcnpj
 from sparkpost import SparkPost
 from threading import Thread
