@@ -8,13 +8,11 @@ from flask import Flask, jsonify, request, render_template, redirect, g, flash, 
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
-from urllib.parse import urljoin, urlparse, urldefrag
+from mmh3 import hash64
 from pycpfcnpj import cpfcnpj
 from sparkpost import SparkPost
 from threading import Thread
-
-
-
+from urllib.parse import urljoin, urlparse, urldefrag
 import bcrypt
 import boto3
 import cachetools.func
