@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from bson.objectid import ObjectId
 from cardvalidator import luhn
 from datetime import datetime
 from dns import resolver
@@ -10,6 +11,7 @@ from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
 from mmh3 import hash64
 from pycpfcnpj import cpfcnpj
+from pymongo import MongoClient
 from sparkpost import SparkPost
 from threading import Thread
 from urllib.parse import urljoin, urlparse, urldefrag
@@ -42,4 +44,3 @@ import timeout_decorator
 import tldextract
 import traceback
 import zmq
-import pymongo
