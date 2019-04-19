@@ -27,3 +27,4 @@ sparkpost
 stripe
 timeout-decorator
 tldextract
+pymongo
