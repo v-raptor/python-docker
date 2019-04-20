@@ -6,7 +6,7 @@ card-validator
 certifi
 certstream
 dogstatsd-python
-elasticsearch
+elasticsearch==6.3.1
 email_validator
 flask
 flask-httpauth
@@ -20,6 +20,7 @@ mysql-connector
 oauth2client
 pycpfcnpj
 pyjwt
+pymongo
 redis
 requests
 schedule
@@ -27,4 +28,3 @@ sparkpost
 stripe
 timeout-decorator
 tldextract
-pymongo
