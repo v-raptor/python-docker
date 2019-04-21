@@ -4,6 +4,7 @@ ADD requirements.txt /code/
 WORKDIR /code
 
 ENV TZ America/Sao_Paulo
+ENV AWS_DEFAULT_REGION us-east-1
 
 RUN apk add --no-cache tzdata python3 py-cryptography py-lxml py-zmq build-base python3-dev libffi-dev libressl-dev \
     && python3 -m ensurepip \
