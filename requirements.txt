@@ -3,6 +3,7 @@ beautifulsoup4
 boto3
 cachetools
 card-validator
+celery
 certifi
 certstream
 dogstatsd-python
