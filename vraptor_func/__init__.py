@@ -2,6 +2,20 @@ from vraptor_libs import *
 
 
 
+def base64_decode(bytestring):
+    try:
+        return base64.decodebytes(bytestring)
+    except:
+        return False
+
+
+
+def get_env(s3_resource, bucket, key):
+    env_file = s3_resource.Object(bucket, key).get()['Body'].read()
+    return json.loads(env_file)
+
+
+
 def log_info(msg):
     print('INFO', msg)
     sys.stdout.flush()
@@ -192,32 +206,5 @@ def get_matching_s3_keys(bucket, prefix='', suffix=''):
     for obj in get_matching_s3_objects(bucket, prefix, suffix):
         yield obj['Key']
 
-
-
-# def is_older_host(hostname, timestamp):
-#     if int(es.get(index = 'hosts_', doc_type = 'doc', id = hostname)['_source']['created']) > timestamp:
-#         send_to_es_hosts(hostname, timestamp)
-
-
-
-# def is_older_domain(domain, timestamp):
-#     if int(es.get(index = 'domains_', doc_type = 'doc', id = domain)['_source']['created']) > timestamp:
-#         send_to_es_domains(domain, timestamp)
-
-
-
-# def proc_domain(domain, timestamp):
-#     if es.exists(index = 'domains_', doc_type = 'doc', id = domain):
-#         is_older_domain(domain, timestamp)
-#     elif soa_responsible(domain):
-#         send_to_es_domains(domain, timestamp)
-
-
-
-# def proc_host(hostname, timestamp):
-#     if es.exists(index = 'hosts_', doc_type = 'doc', id = hostname):
-#         is_older_host(hostname, timestamp)
-#     elif is_up(hostname):
-#         send_to_es_hosts(hostname, timestamp)
 
 

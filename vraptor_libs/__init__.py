@@ -11,9 +11,11 @@ from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
 from mmh3 import hash64
 from pycpfcnpj import cpfcnpj
+from pymongo import MongoClient
 from sparkpost import SparkPost
 from threading import Thread
 from urllib.parse import urljoin, urlparse, urldefrag
+import base64
 import bcrypt
 import boto3
 import cachetools.func
