@@ -30,3 +30,4 @@ stripe
 timeout-decorator
 tldextract
 urllib3==1.24.3
+xxhash
