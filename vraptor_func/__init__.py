@@ -28,13 +28,18 @@ def log_err(msg = ''):
 
 
 
-def es_exists(_index, _id):
-    return es.exists(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
+def es_exists(_conn, _index, _id):
+    return _conn.exists(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
 
 
 
-def es_index(_index, _id, _body):
-    return es.index(index = _index, doc_type = 'doc', id = _id, body = _body, request_timeout = 30)
+def es_get(_conn, _index, _id):
+    return _conn.get(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
+
+
+
+def es_index(_conn, _index, _id, _body):
+    return _conn.index(index = _index, doc_type = 'doc', id = _id, body = _body, request_timeout = 30)
 
 
 
@@ -117,21 +122,29 @@ def remove_brackets(line):
 
 
 
-def get_domain(hostname):
-    return tldextract.extract(hostname).registered_domain
+def get_domain(host):
+    return tldextract.extract(host).registered_domain
 
 
 
-def valid_host(hostname):
+def valid_host(host):
     try:
-        return get_domain(hostname) and '.'.join(tldextract.extract(hostname)).lstrip('.') == hostname.rstrip('.')
+        return tldextract.extract(host).registered_domain
     except:
         return False
 
 
 
-def is_domain(hostname):
-    return hostname == tldextract.extract(hostname).registered_domain
+email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
+def valid_email(email):
+    if re.match(email_exp, email):
+        return valid_host(email.split('@')[1])
+    return False
+
+
+
+def is_domain(host):
+    return host == tldextract.extract(host).registered_domain
 
 
 
@@ -179,7 +192,6 @@ def get_s3_keys_as_generator(bucket):
             break
 
 
-
 def get_matching_s3_objects(bucket, prefix='', suffix=''):
     s3 = boto3.client('s3')
     kwargs = {'Bucket': bucket}
@@ -205,6 +217,3 @@ def get_matching_s3_objects(bucket, prefix='', suffix=''):
 def get_matching_s3_keys(bucket, prefix='', suffix=''):
     for obj in get_matching_s3_objects(bucket, prefix, suffix):
         yield obj['Key']
-
-
-

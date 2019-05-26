@@ -5,7 +5,7 @@ from datetime import datetime
 from dns import resolver
 from elasticsearch import Elasticsearch
 from email_validator import validate_email
-from flask import Flask, jsonify, request, render_template, redirect, g, flash, url_for, send_from_directory
+from flask import *
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
@@ -15,6 +15,7 @@ from pymongo import MongoClient
 from sparkpost import SparkPost
 from threading import Thread
 from urllib.parse import urljoin, urlparse, urldefrag
+from xxhash import xxh64_hexdigest
 import base64
 import bcrypt
 import boto3
