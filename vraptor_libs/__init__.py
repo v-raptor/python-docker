@@ -24,6 +24,7 @@ import certstream
 import cloudscraper
 import csv
 import fileinput
+import geoip2.database
 import gzip
 import hashlib
 import io
