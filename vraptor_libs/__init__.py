@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 from cardvalidator import luhn
 from datetime import datetime
 from dns import resolver
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch, helpers
 from email_validator import validate_email
 from flask import *
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
