@@ -5,7 +5,7 @@ from datetime import datetime
 from dns import resolver
 from elasticsearch import Elasticsearch, helpers
 from email_validator import validate_email
-from flask import *
+from flask import Flask, jsonify, request, render_template, redirect, g, flash, url_for, make_response
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
