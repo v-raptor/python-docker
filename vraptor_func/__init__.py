@@ -48,6 +48,18 @@ def es_index(_conn, _index, _id, _body):
 
 
 
+def es_update(_conn, _index, _id, _body):
+    return _conn.update(index = _index, doc_type = 'doc', id = _id, body = _body, request_timeout = 30)
+
+
+
+def es_create_index(_conn, _index, _mapping):
+    setup = { 'settings' : { 'number_of_replicas': 0 } }
+    _conn.indices.create(index = _index, body = setup)
+    _conn.indices.put_mapping(index = _index, doc_type = 'doc', body = _mapping)
+
+
+
 def is_open(ip, port):
    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
    s.settimeout(2)
