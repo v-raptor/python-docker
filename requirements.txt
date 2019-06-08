@@ -9,7 +9,6 @@ certstream
 cloudscraper
 dogstatsd-python
 elasticsearch==6.3.1
-email_validator
 flask
 flask-httpauth
 geoip2
@@ -20,7 +19,6 @@ jira
 mailchimp3
 mmh3
 mysql-connector
-oauth2client
 pycpfcnpj
 pyjwt
 pymongo
