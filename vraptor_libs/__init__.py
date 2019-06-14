@@ -8,7 +8,6 @@ from flask import Flask, jsonify, request, render_template, redirect, g, flash, 
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from jinja2 import Environment, FileSystemLoader
 from mailchimp3 import MailChimp
-from mmh3 import hash64
 from pycpfcnpj import cpfcnpj
 from pymongo import MongoClient
 from sparkpost import SparkPost
