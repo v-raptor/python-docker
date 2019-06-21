@@ -245,6 +245,31 @@ def get_matching_s3_keys(bucket, prefix='', suffix=''):
 
 
 
+def send_email_ses(ses_client, source, dest, reply_to, subject, body_html):
+    return ses_client.send_email(
+        Source = source,
+        Destination = { 'ToAddresses': dest },
+        ReplyToAddresses = reply_to,
+        Message = {
+            'Body': {
+                'Html': {
+                    'Charset': "UTF-8",
+                    'Data': body_html,
+                },
+                'Text': {
+                    'Charset': "UTF-8",
+                    'Data': subject,
+                },
+            },
+            'Subject': {
+                'Charset': "UTF-8",
+                'Data': subject,
+            },
+        },
+    )
+
+
+
 # def is_older_host(hostname, timestamp):
 #     if int(es.get(index = 'hosts_', doc_type = 'doc', id = hostname)['_source']['created']) > timestamp:
 #         send_to_es_hosts(hostname, timestamp)
