@@ -16,6 +16,6 @@ RUN apk add --no-cache tzdata python3 py-cryptography py-lxml py-zmq build-base 
     && echo -e '[default]\nregion = us-east-1' > /root/.aws/config \
     && apk del build-base python3-dev libffi-dev libressl-dev
 
-ADD ./vraptor_libs/ /usr/lib/python3.6/vraptor_libs/
-ADD ./vraptor_func/ /usr/lib/python3.6/vraptor_func/
+ADD ./vraptor_libs/ /usr/lib/python3.7/vraptor_libs/
+ADD ./vraptor_func/ /usr/lib/python3.7/vraptor_func/
 CMD [ "python3", "app.py" ]
