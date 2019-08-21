@@ -2,6 +2,15 @@ from vraptor_libs import *
 
 
 
+def get_mx(host):
+    try:
+        mx_record = resolver.query(host, 'MX')
+        return [exchange.to_text().split() for exchange in mx_record]
+    except (resolver.NoAnswer, resolver.NXDOMAIN, resolver.NoNameservers):
+        return []
+
+
+
 def base64_decode(bytestring):
     try:
         return base64.decodebytes(bytestring)
