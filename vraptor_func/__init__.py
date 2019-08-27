@@ -53,7 +53,7 @@ def es_get(_conn, _index, _id):
 
 
 def es_search(_conn, _index, _body):
-    res = _conn.search(index = _index, body = _body, request_timeout = 30)
+    res = _conn.search(index = _index, body = _body, request_timeout = 30, size = 1000)
     if res['hits']['total'] > 0:
         return res['hits']['hits']
     return []
