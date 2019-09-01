@@ -52,11 +52,12 @@ def es_get(_conn, _index, _id):
 
 
 
-def es_search(_conn, _index, _body):
-    res = _conn.search(index = _index, body = _body, request_timeout = 30, size = 1000)
-    if res['hits']['total'] > 0:
-        return res['hits']['hits']
-    return []
+def es_search(conn, index, query):
+    res = conn.search(index = index, body = query, scroll = '12h', request_timeout = 30, size = 1000)
+    while res['hits']['hits']:
+        for doc in res['hits']['hits']:
+            yield doc
+        res = conn.scroll(scroll_id = res['_scroll_id'], scroll = '12h')
 
 
 
