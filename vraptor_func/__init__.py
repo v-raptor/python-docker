@@ -2,6 +2,14 @@ from vraptor_libs import *
 
 
 
+one_minute = 60
+one_hour = one_minute * 60
+one_day = one_hour * 24
+one_week = one_day * 7
+one_month = one_day * 30
+
+
+
 def get_mx(host):
     try:
         mx_record = resolver.query(host, 'MX')
