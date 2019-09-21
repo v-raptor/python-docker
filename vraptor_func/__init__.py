@@ -7,6 +7,7 @@ one_hour = one_minute * 60
 one_day = one_hour * 24
 one_week = one_day * 7
 one_month = one_day * 30
+one_year = one_day * 365
 
 
 
