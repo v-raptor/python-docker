@@ -11,6 +11,13 @@ one_year = one_day * 365
 
 
 
+recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
+def recaptcha(secret, recaptcha_response):
+    r = requests.post(recaptcha_url, data={'secret': secret, 'response': recaptcha_response })
+    return r.json()['success']
+
+
+
 def get_mx(host):
     try:
         mx_record = resolver.query(host, 'MX')

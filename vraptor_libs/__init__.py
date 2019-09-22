@@ -15,6 +15,7 @@ from sparkpost import SparkPost
 from threading import Thread
 from urllib.parse import urljoin, urlparse, urldefrag
 from xxhash import xxh64_hexdigest
+import atexit
 import base64
 import bcrypt
 import boto3
