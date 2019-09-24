@@ -22,7 +22,7 @@ def get_mx(host):
     try:
         mx_record = resolver.query(host, 'MX')
         return [exchange.to_text().split() for exchange in mx_record]
-    except (resolver.NoAnswer, resolver.NXDOMAIN, resolver.NoNameservers):
+    except:
         return []
 
 
@@ -241,6 +241,7 @@ def get_s3_keys_as_generator(bucket):
             kwargs['ContinuationToken'] = resp['NextContinuationToken']
         except KeyError:
             break
+
 
 
 def get_matching_s3_objects(bucket, prefix='', suffix=''):
