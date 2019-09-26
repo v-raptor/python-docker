@@ -22,6 +22,7 @@ import boto3
 import cachetools.func
 import certstream
 import cloudscraper
+import collections
 import concurrent.futures
 import csv
 import fileinput

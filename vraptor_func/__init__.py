@@ -13,8 +13,11 @@ one_year = one_day * 365
 
 recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
 def recaptcha(secret, recaptcha_response):
-    r = requests.post(recaptcha_url, data={'secret': secret, 'response': recaptcha_response })
-    return r.json()['success']
+    try:
+        r = requests.post(recaptcha_url, data={'secret': secret, 'response': recaptcha_response })
+        return r.json()['success']
+    except:
+        return False
 
 
 
@@ -32,11 +35,6 @@ def base64_decode(bytestring):
         return base64.decodebytes(bytestring)
     except:
         return False
-
-
-
-def gen_token_jwt(payload, secret):
-    return jwt.encode(payload, secret, algorithm = 'HS256').decode()
 
 
 
@@ -68,7 +66,7 @@ def es_get(_conn, _index, _id):
 
 
 
-def es_search(conn, index, query):
+def es_search(conn, index, query={'query': {'match_all' : {}}}):
     res = conn.search(index = index, body = query, scroll = '12h', request_timeout = 30, size = 1000)
     while res['hits']['hits']:
         for doc in res['hits']['hits']:
