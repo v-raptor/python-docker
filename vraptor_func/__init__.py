@@ -11,8 +11,73 @@ one_year = one_day * 365
 
 
 
-recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
+mysql323_exp = re.compile(r'^[a-f0-9]{16}$', re.I)
+plain_exp = re.compile(r'^.{4,31}$')
+md5_exp = re.compile(r'^[a-f0-9]{32}$', re.I)
+sha1_exp = re.compile(r'^[a-f0-9]{40}$', re.I)
+sha224_exp = re.compile(r'^[a-f0-9]{56}$', re.I)
+sha256_exp = re.compile(r'^[a-f0-9]{64}$', re.I)
+sha384_exp = re.compile(r'^[a-f0-9]{96}$', re.I)
+sha512_exp = re.compile(r'^[a-f0-9]{128}$', re.I)
+bcrypt_exp = re.compile(r'^\$2[aby]?\$[0-9]{1,2}\$[.a-z0-9/]{53}$', re.I)
+
+
+
+password_exps = {
+            'mysql323': mysql323_exp,
+            'plain': plain_exp,
+            'md5': md5_exp,
+            'sha1': sha1_exp,
+            'sha224': sha224_exp,
+            'sha256': sha256_exp,
+            'sha384': sha384_exp,
+            'sha512': sha512_exp,
+            'bcrypt': bcrypt_exp,
+        }
+
+
+
+def create_db(database, sqls):
+    for sql in sqls:
+        try:
+            with database:
+                database.execute(sql)
+        except Exception as e:
+            print(e)
+            pass
+
+
+
+def is_host(host):
+    try:
+        return urlparse(host).domain != ''
+    except:
+        return False
+
+
+
+def is_ipv4(addresss):
+    try:
+        return ipaddress.ip_address(addresss).version == 4
+    except:
+        return False
+
+
+
+def is_html(text):
+    html_tags = ['div', 'body', 'html', 'head', 'img', 'title', 'meta', 'a', 'span', 'br', 'h1', 'p', 'input', 'script', 'style', 'link', 'form', 'td', 'tr', 'table']
+    try:
+        soup = BeautifulSoup(text, 'html.parser').find_all()
+        paste_tags = [ tag.name for tag in soup ]
+        found = [ i for i in html_tags if i in paste_tags ]
+        return len(found) > 2
+    except:
+        return False
+
+
+
 def recaptcha(secret, recaptcha_response):
+    recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
     try:
         r = requests.post(recaptcha_url, data={'secret': secret, 'response': recaptcha_response })
         return r.json()['success']
@@ -56,39 +121,39 @@ def log_err(msg = ''):
 
 
 
-def es_exists(_conn, _index, _id):
-    return _conn.exists(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
+def es_exists(conn, index, _id):
+    return conn.exists(index = index, doc_type = 'doc', id = _id, request_timeout = 30)
 
 
 
-def es_get(_conn, _index, _id):
-    return _conn.get(index = _index, doc_type = 'doc', id = _id, request_timeout = 30)
+def es_get(conn, index, _id):
+    return conn.get(index = index, doc_type = 'doc', id = _id, request_timeout = 30)
 
 
 
 def es_search(conn, index, query={'query': {'match_all' : {}}}):
-    res = conn.search(index = index, body = query, scroll = '12h', request_timeout = 30, size = 1000)
+    res = conn.search(index = index, body = query, scroll = '36h', request_timeout = 120, size = 1000)
     while res['hits']['hits']:
         for doc in res['hits']['hits']:
             yield doc
-        res = conn.scroll(scroll_id = res['_scroll_id'], scroll = '12h')
+        res = conn.scroll(scroll_id = res['_scroll_id'], scroll = '36h')
 
 
 
-def es_index(_conn, _index, _id, _body):
-    return _conn.index(index = _index, doc_type = 'doc', id = _id, body = _body, request_timeout = 30)
+def es_index(conn, index, _id, body):
+    return conn.index(index = index, doc_type = 'doc', id = _id, body = body, request_timeout = 30)
 
 
 
-def es_update(_conn, _index, _id, _body):
-    return _conn.update(index = _index, doc_type = 'doc', id = _id, body = _body, request_timeout = 30)
+def es_update(conn, index, _id, body):
+    return conn.update(index = index, doc_type = 'doc', id = _id, body = body, request_timeout = 30)
 
 
 
-def es_create_index(_conn, _index, _mapping):
+def es_create_index(conn, index, _mapping):
     setup = { 'settings' : { 'number_of_replicas': 0 } }
-    _conn.indices.create(index = _index, body = setup)
-    _conn.indices.put_mapping(index = _index, doc_type = 'doc', body = _mapping)
+    conn.indices.create(index = index, body = setup)
+    conn.indices.put_mapping(index = index, doc_type = 'doc', body = _mapping)
 
 
 
@@ -138,8 +203,8 @@ def verify_bcypt(username, password, users):
 
 
 def validate_jira_user(username, password):
+    url = 'https://portal.axur.com/rest/auth/1/session'
     try:
-        url = 'https://portal.axur.com/rest/auth/1/session'
         r = requests.head(url, auth = (username, password))
         return r.status_code == 200
     except:
@@ -184,8 +249,8 @@ def valid_host(host):
 
 
 
-email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
 def valid_email(email):
+    email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
     if re.match(email_exp, email):
         return valid_host(email.split('@')[1])
     return False
