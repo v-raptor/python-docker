@@ -2,6 +2,11 @@ from vraptor_libs import *
 
 
 
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning, module='bs4')
+
+
+
 one_minute = 60
 one_hour = one_minute * 60
 one_day = one_hour * 24
@@ -44,7 +49,6 @@ def create_db(database, sqls):
                 database.execute(sql)
         except Exception as e:
             print(e)
-            pass
 
 
 
@@ -79,13 +83,14 @@ def is_html(text):
 def recaptcha(secret, recaptcha_response):
     recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
     try:
-        r = requests.post(recaptcha_url, data={'secret': secret, 'response': recaptcha_response })
+        r = requests.post(recaptcha_url, data={ 'secret': secret, 'response': recaptcha_response })
         return r.json()['success']
     except:
         return False
 
 
 
+@cachetools.func.ttl_cache(maxsize=4096, ttl=6000)
 def get_mx(host):
     try:
         mx_record = resolver.query(host, 'MX')
@@ -150,10 +155,10 @@ def es_update(conn, index, _id, body):
 
 
 
-def es_create_index(conn, index, _mapping):
+def es_create_index(conn, index, mapping):
     setup = { 'settings' : { 'number_of_replicas': 0 } }
     conn.indices.create(index = index, body = setup)
-    conn.indices.put_mapping(index = index, doc_type = 'doc', body = _mapping)
+    conn.indices.put_mapping(index = index, doc_type = 'doc', body = mapping)
 
 
 
@@ -249,8 +254,8 @@ def valid_host(host):
 
 
 
+email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
 def valid_email(email):
-    email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
     if re.match(email_exp, email):
         return valid_host(email.split('@')[1])
     return False
