@@ -16,6 +16,10 @@ one_year = one_day * 365
 
 
 
+email_exp_findall = re.compile(r'\b[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}\b', re.I)
+
+
+
 mysql323_exp = re.compile(r'^[a-f0-9]{16}$', re.I)
 plain_exp = re.compile(r'^.{4,31}$')
 md5_exp = re.compile(r'^[a-f0-9]{32}$', re.I)
