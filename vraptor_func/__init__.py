@@ -137,11 +137,11 @@ def es_get(conn, index, _id):
 
 
 def es_search(conn, index, query={'query': {'match_all' : {}}}):
-    res = conn.search(index = index, body = query, scroll = '36h', request_timeout = 120, size = 1000)
+    res = conn.search(index = index, body = query, scroll = '12h', request_timeout = 120, size = 1000)
     while res['hits']['hits']:
         for doc in res['hits']['hits']:
             yield doc
-        res = conn.scroll(scroll_id = res['_scroll_id'], scroll = '36h')
+        res = conn.scroll(scroll_id = res['_scroll_id'], scroll = '12h')
 
 
 
