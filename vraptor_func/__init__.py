@@ -79,7 +79,7 @@ def is_ipv4(addresss):
 def is_html(text):
     html_tags = ['div', 'body', 'html', 'head', 'img', 'title', 'meta', 'a', 'span', 'br', 'h1', 'p', 'input', 'script', 'style', 'link', 'form', 'td', 'tr', 'table']
     try:
-        soup = BeautifulSoup(text, 'html.parser').find_all()
+        soup = BeautifulSoup(text, 'lxml').find_all()
         paste_tags = [ tag.name for tag in soup ]
         found = [ i for i in html_tags if i in paste_tags ]
         return len(found) > 2
