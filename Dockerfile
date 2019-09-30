@@ -6,7 +6,7 @@ WORKDIR /code
 ENV TZ America/Sao_Paulo
 ENV AWS_DEFAULT_REGION us-east-1
 
-RUN apk add --no-cache tzdata python3 py-cryptography py-zmq build-base python3-dev libffi-dev libressl-dev \
+RUN apk add --no-cache tzdata python3 py-cryptography py3-lxml py-zmq build-base python3-dev libffi-dev libressl-dev \
     && python3 -m ensurepip \
     && rm -r /usr/lib/python*/ensurepip \
     && pip3 install --upgrade pip setuptools \
