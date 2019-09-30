@@ -82,7 +82,7 @@ def is_html(text):
         soup = BeautifulSoup(text, 'lxml').find_all()
         paste_tags = [ tag.name for tag in soup ]
         found = [ i for i in html_tags if i in paste_tags ]
-        return len(found) > 2
+        return len(found) > 1
     except:
         return False
 
