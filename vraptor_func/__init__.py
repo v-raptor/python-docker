@@ -60,6 +60,14 @@ def is_host(host):
 
 
 
+def is_url(word):
+    try:
+        return urlparse(word).scheme in ['http', 'https', 'ftp']
+    except:
+        return False
+
+
+
 def is_ipv4(addresss):
     try:
         return ipaddress.ip_address(addresss).version == 4
