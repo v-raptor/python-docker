@@ -18,6 +18,7 @@ one_year = one_day * 365
 
 email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
 email_exp_findall = re.compile(r'\b[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}\b', re.I)
+email_exp_search = re.compile(r'[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}', re.I)
 
 
 
