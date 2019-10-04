@@ -16,6 +16,7 @@ one_year = one_day * 365
 
 
 
+email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
 email_exp_findall = re.compile(r'\b[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}\b', re.I)
 
 
@@ -80,13 +81,25 @@ def is_ipv4(addresss):
 
 
 
-def is_html(text):
+def is_xml(text):
     html_tags = ['div', 'body', 'html', 'head', 'img', 'title', 'meta', 'a', 'span', 'br', 'h1', 'p', 'input', 'script', 'style', 'link', 'form', 'td', 'tr', 'table']
     try:
         soup = BeautifulSoup(text, 'lxml').find_all()
         paste_tags = [ tag.name for tag in soup ]
         found = [ i for i in html_tags if i in paste_tags ]
-        return len(found) > 3
+        return len(found) > 4
+    except:
+        return False
+
+
+
+def is_html(text):
+    html_tags = ['div', 'body', 'html', 'head', 'img', 'title', 'meta', 'a', 'span', 'br', 'h1', 'p', 'input', 'script', 'style', 'link', 'form', 'td', 'tr', 'table']
+    try:
+        soup = BeautifulSoup(text, 'html.parser').find_all()
+        paste_tags = [ tag.name for tag in soup ]
+        found = [ i for i in html_tags if i in paste_tags ]
+        return len(found) > 1
     except:
         return False
 
@@ -266,7 +279,6 @@ def valid_host(host):
 
 
 
-email_exp = re.compile(r'^[a-z0-9_+.-]+@[a-z0-9.-]+\.[a-z]{2,63}$', re.I)
 def valid_email(email):
     if re.match(email_exp, email):
         return valid_host(email.split('@')[1])
