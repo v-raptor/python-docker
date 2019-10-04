@@ -143,14 +143,14 @@ def get_env(s3_resource, bucket, key):
 
 
 
-def log_info(msg):
-    print('INFO', msg)
+def log_info(*args):
+    print('INFO', args)
     sys.stdout.flush()
 
 
 
-def log_err(msg = ''):
-    print('WARN', msg, traceback.format_exc().replace('\n', ' | '))
+def log_err(*args):
+    print('WARN', args, traceback.format_exc().replace('\n', ' | '))
     sys.stdout.flush()
 
 
